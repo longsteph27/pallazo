@@ -1,0 +1,59 @@
+.border-container {
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    /* border-image: linear-gradient(to right, #ffff 0%, #FFECA2 0%,  #D8BD95 100%) 1; */
+    background:
+        linear-gradient(to right, #F9F7ED, #F9F1E1) padding-box,
+        linear-gradient(to right, #FFECA2, #D8BD95 100%) border-box;
+}
+
+.card-wrap {
+    display: flex;
+    justify-content: center;
+    /* gap: 40px; */
+    /* margin-top: 80px; */
+}
+
+.card {
+    border-radius: 16px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 16px;
+    font-weight: bold;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+/* Nghiêng thẻ */
+.c1 {
+    background: #777;
+    transform: rotate(-22deg);
+}
+
+.c2 {
+    background: #7a0000;
+    transform: rotate(13deg);
+}
+
+.c3 {
+    background: #d8b58a;
+    transform: rotate(5deg);
+}
+
+.c4 {
+    background: #81e0f5;
+    transform: rotate(10deg);
+}
+
+.c5 {
+    background: #002f75;
+    transform: rotate(18deg);
+}
+
+/* Hover cho đẹp */
+.card:hover {
+    transform: rotate(0) scale(1.05);
+    z-index: 10;
+}

@@ -1,0 +1,66 @@
+/* Nếu sau này bạn chuyển sang overflow:auto thì scrollbar cũng bị ẩn */
+.hide-scrollbar {
+    scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Border 2 bên (nếu cần) */
+.gaming-categories-card-active {
+    position: relative;
+}
+
+.gaming-categories-card-active::before,
+.gaming-categories-card-active::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: linear-gradient(to bottom, #060e1a, #f1d1a1, #060e1a);
+}
+
+.gaming-categories-card-active::before {
+    left: 0;
+    width: 4px;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+}
+
+.gaming-categories-card-active::after {
+    right: 0;
+    width: 3px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
+.gaming-categories-title-active {
+    position: relative;
+}
+
+.gaming-categories-title-active::before,
+.gaming-categories-title-active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    z-index: 3;
+    pointer-events: none;
+    background: linear-gradient(to right, transparent, #E8E5D6, transparent);
+}
+
+.gaming-categories-title-active::before {
+    top: 0;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+.gaming-categories-title-active::after {
+    bottom: 0;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}

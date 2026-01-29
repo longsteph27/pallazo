@@ -1,0 +1,31 @@
+.member-section {
+    background: none;
+    color: #2c2c2c;
+    position: relative;
+}
+
+.clip-hexagon {
+    position: relative;
+}
+
+.clip-hexagon::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #f9f4e7;
+    border: 2px solid #d9c8a8;
+    border-radius: 18px;
+    clip-path: polygon(13% 0, 100% 0, 100% 50%, 100% 100%, 13% 100%, 0% 50%);
+    -webkit-clip-path: polygon(13% 0, 100% 0, 100% 50%, 100% 100%, 13% 100%, 0% 50%);
+}
+
+.clip-hexagon::after {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    background: #faf7ef;
+    border: 2px solid #e7dbc2;
+    border-radius: 16px;
+    clip-path: polygon(16% 0, 100% 0, 100% 50%, 100% 100%, 16% 100%, 3% 50%);
+    -webkit-clip-path: polygon(16% 0, 100% 0, 100% 50%, 100% 100%, 16% 100%, 3% 50%);
+}

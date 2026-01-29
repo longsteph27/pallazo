@@ -1,0 +1,108 @@
+.loyal-program-section {
+  width: 100%;
+  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+  position: relative;
+  padding: 100px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loyal-program-container {
+  max-width: 1400px;
+  width: 100%;
+  position: relative;
+}
+
+.loyal-program-frame {
+  border: 2px solid white;
+  border-radius: 8px;
+  padding: 80px 40px;
+  background: rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.loyal-program-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.loyal-program-title {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.register-now-btn {
+  background: white;
+  color: #5a4032;
+  padding: 16px 48px;
+  border-radius: 6px;
+  border: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.register-now-btn:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+}
+
+.loyal-program-description {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 600px;
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .loyal-program-title {
+    font-size: 40px;
+    letter-spacing: 2px;
+  }
+  
+  .loyal-program-frame {
+    padding: 60px 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .loyal-program-section {
+    padding: 60px 20px;
+  }
+  
+  .loyal-program-title {
+    font-size: 28px;
+    letter-spacing: 1.5px;
+  }
+  
+  .loyal-program-frame {
+    padding: 50px 20px;
+  }
+  
+  .register-now-btn {
+    padding: 14px 36px;
+    font-size: 14px;
+  }
+  
+  .loyal-program-description {
+    font-size: 14px;
+  }
+}
+

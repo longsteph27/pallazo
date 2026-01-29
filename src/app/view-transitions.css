@@ -1,0 +1,46 @@
+/* View Transitions for smooth page navigation */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 0.3s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-old(root) {
+    animation-name: fadeOut;
+}
+
+::view-transition-new(root) {
+    animation-name: fadeIn;
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+}
+
+/* Shared element transitions for hero images */
+.hero-image {
+    view-transition-name: hero;
+}
+
+.content-card {
+    view-transition-name: content;
+}
+
+/* Smooth transitions for specific elements */
+::view-transition-group(hero) {
+    animation-duration: 0.5s;
+}
+
+::view-transition-group(content) {
+    animation-duration: 0.4s;
+}

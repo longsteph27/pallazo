@@ -1,0 +1,215 @@
+@keyframes bespokeGradientGlow {
+  0% {
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.12);
+  }
+  50% {
+    box-shadow: 0 24px 54px rgba(0, 0, 0, 0.18);
+  }
+  100% {
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.bespoke-section {
+  background: none;
+  color: #2c2c2c;
+  position: relative;
+}
+
+.wave-top-bespoke svg path {
+  fill: #faf8f5;
+}
+
+.bespoke-content {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  align-items: center;
+  text-align: center;
+}
+
+.bespoke-main-title {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 600;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: #3b2617;
+  margin: 0;
+}
+
+.bespoke-svg-wrapper {
+  position: relative;
+}
+
+.bespoke-fan-svg {
+  width: 100%;
+  height: auto;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: block;
+}
+
+.bespoke-inner-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  text-align: center;
+  padding: 0 32px 32px;
+}
+
+.bespoke-center-title {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-size: clamp(24px, 3.2vw, 38px);
+  font-weight: 600;
+  color: #2d1a10;
+  margin: 0;
+  line-height: 1.3;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.bespoke-center-description {
+  font-family: 'Lato', 'Segoe UI', sans-serif;
+  font-size: clamp(16px, 1.4vw, 18px);
+  line-height: 1.8;
+  color: #4a4037;
+  margin: 0;
+  max-width: 620px;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.service-label-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+}
+
+.service-label-text {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: #3b2617;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.service-inner-label {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 14px;
+  background: rgba(12, 12, 12, 0.75);
+  border-radius: 14px;
+}
+
+.service-inner-label span {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #f6f0e8;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.bespoke-cta-wrapper {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 40px;
+}
+
+.bespoke-cta-button {
+  padding: 16px 48px;
+  font-family: 'Lato', 'Segoe UI', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: linear-gradient(120deg, #c0803d 0%, #b26525 45%, #a85711 100%);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 18px 42px rgba(161, 96, 45, 0.3);
+}
+
+.bespoke-cta-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 52px rgba(161, 96, 45, 0.36);
+}
+
+.bespoke-cta-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(161, 96, 45, 0.28);
+}
+
+@media (max-width: 1024px) {
+  .bespoke-svg-wrapper {
+    padding: 40px 0 60px;
+  }
+
+  .bespoke-center-description {
+    max-width: 500px;
+  }
+
+  .service-label-text {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .bespoke-content {
+    gap: 36px;
+  }
+
+  .bespoke-inner-content {
+    gap: 12px;
+  }
+
+  .bespoke-center-description {
+    font-size: 15px;
+  }
+
+  .service-label-text {
+    font-size: 13px;
+    letter-spacing: 1.8px;
+  }
+}
+
+@media (max-width: 640px) {
+  .bespoke-main-title {
+    letter-spacing: 3px;
+  }
+
+  .bespoke-center-title {
+    letter-spacing: 2px;
+  }
+
+  .bespoke-cta-button {
+    width: 100%;
+    max-width: 320px;
+  }
+}
+
