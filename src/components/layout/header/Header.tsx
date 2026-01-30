@@ -9,11 +9,11 @@ import { LanguageSwitcher } from "./LanguageSwitcher"
 const leftLinks = [
   { label: 'ABOUT US', href: '/about-us' },
   { label: 'GAMING', href: '/gaming' },
-  { label: 'REWARDS', href: '/rewards' },
+  { label: 'REWARD', href: '/rewards' },
 ]
 
 const rightLinks = [
-  { label: 'PROMOTIONS', href: '/promotions' },
+  { label: 'HAPPENINGS', href: '/promotions' },
   { label: 'PRIVILEGES', href: '/privileges' },
   { label: 'GALLERY', href: '/gallery' },
 ]
@@ -31,43 +31,52 @@ function Header() {
       <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-black/20 pointer-events-none z-0" />
 
       {/* Desktop Layout (hidden on mobile) */}
-      <div className="hidden lg:grid grid-cols-7 items-center h-[58px] relative z-20">
-        <div className="nav-group nav-group--left col-span-3 col-start-1">
-          <ul>
-            {leftLinks.map((link) => (
-              <li key={link.label}>
-                <Link href={link.href} className="nav-link">
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+      <div className="hidden lg:flex items-center justify-between h-[58px] relative z-20 px-12 max-w-[1440px] mx-auto w-full">
+        {/* Left Nav */}
+        <div className="flex-1 flex justify-end pr-8">
+          <div className="nav-group">
+            <ul>
+              {leftLinks.map((link) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="nav-link">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
-        <div className="absolute left-1/2 -translate-x-1/2 top-0 w-[116px] h-[92px]" aria-label="Palazzo">
-          <Link href="/" className="logo-badge w-full h-full block">
-            <Image src="/logo.svg" alt="logo vector" className="object-contain" width={44} height={37} />
-            <Image src="/logo_name.svg" alt="logo wordmark" width={73} height={12} />
-          </Link>
+        {/* Center Logo */}
+        <div className="relative w-[116px] flex justify-center z-20" aria-label="Palazzo">
+          <div className="absolute top-[-29px] w-[116px] h-[92px]">
+            <Link href="/" className="logo-badge w-full h-full block">
+              <Image src="/logo.svg" alt="logo vector" className="object-contain" width={44} height={37} />
+              <Image src="/logo_name.svg" alt="logo wordmark" width={73} height={12} />
+            </Link>
+          </div>
         </div>
 
-        <div className="nav-group nav-group--right col-span-3 col-start-5">
-          <ul>
-            {rightLinks.map((link) => (
-              <li key={link.label}>
-                <Link href={link.href} className="nav-link">
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* Right Nav & Language */}
+        <div className="flex-1 flex justify-between items-center pl-8">
+          <div className="nav-group">
+            <ul>
+              {rightLinks.map((link) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="nav-link">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        {/* Language Switcher */}
-        <div className="hidden lg:block relative z-30">
-          <Suspense fallback={<div className="w-10 h-6" />}>
-            <LanguageSwitcher />
-          </Suspense>
+          {/* Language Switcher */}
+          <div className="relative z-30">
+            <Suspense fallback={<div className="w-10 h-6" />}>
+              <LanguageSwitcher />
+            </Suspense>
+          </div>
         </div>
       </div>
 

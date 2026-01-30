@@ -75,8 +75,8 @@ const Banner = ({
 
             {/* Content Overlay */}
             {(title || subtitle) && (
-                <div className="absolute inset-x-0 top-[40%] -translate-y-1/2 z-30 flex flex-col items-center justify-center text-center px-8 pointer-events-none">
-                    <h2 className="text-white text-xl sm:text-5xl md:text-7xl lg:text-8xl font-serif tracking-widest sm:tracking-[0.2em] md:tracking-[0.4em] font-bold uppercase drop-shadow-2xl">
+                <div className="absolute inset-x-0 w-[60%] top-[33%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 flex flex-col items-center justify-center text-center px-8 pointer-events-none">
+                    <h2 className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif leading-[1.5] font-bold uppercase drop-shadow-2xl">
                         {title}
                         {subtitle && (
                             <>
@@ -90,7 +90,7 @@ const Banner = ({
 
             {/* Jackpot Stats Card */}
             {showJackpotStats && jackpotData && (
-                <div className="absolute bottom-[10%] md:bottom-[5%] left-1/2 -translate-x-1/2 z-40 w-full max-w-[1222px] px-4">
+                <div className="absolute bottom-[20%] md:bottom-[30%] left-1/2 -translate-x-1/2 z-40 w-full max-w-[1222px] px-4">
                     <StatsJackpotCard
                         left={jackpotData.left}
                         right={jackpotData.right}

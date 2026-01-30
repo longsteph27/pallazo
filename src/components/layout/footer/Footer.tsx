@@ -4,13 +4,15 @@ import React from "react";
 import { Facebook, Instagram, Linkedin, MessageCircle, Phone, Send, ChevronUp, ChevronsUp } from "lucide-react";
 import { FooterLogo } from "@/components/icons";
 
+import "./Footer.css";
+
 const Footer = () => {
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
     return (
-        <footer className="relative w-full bg-[#0E231E] text-white pt-16 pb-8 overflow-hidden bg-right-bottom md:bg-center bg-no-repeat" style={{ backgroundImage: "url('/footer_img.png')", backgroundSize: "auto 100%" }}>
+        <footer className="relative w-full bg-[#0E231E] text-white pt-16 pb-8 overflow-hidden footer-container">
             <div className="max-w-[1440px] mx-auto px-6 md:px-12 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 mb-16">
                     {/* Column 1: Stay Connected */}

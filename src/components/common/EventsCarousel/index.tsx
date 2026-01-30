@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { EventCardData } from "@/features/home/components/EventsSection/components/EventsSection";
@@ -311,29 +313,7 @@ export default function Carousel({
                                                 </p>
                                             </div>
                                         </motion.div>
-                                        {/* DETAIL Button relative to card bottom */}
-                                        <div
-                                            className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-auto cursor-pointer"
-                                            onClick={() => console.log("Detail clicked", curr.id)}
-                                        >
-                                            <svg width="127" height="66" viewBox="0 0 127 66" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M63.3564 0.5C77.7422 0.491909 91.7247 5.25633 103.112 14.0469C114.368 22.7355 122.456 34.8733 126.152 48.5938L63.3945 64.9824L0.614258 48.665C4.2947 34.94 12.3704 22.7932 23.6162 14.0918C34.9938 5.28839 48.9707 0.50819 63.3564 0.5Z" fill="url(#paint0_linear_695_12212)" stroke="url(#paint1_linear_695_12212)" />
-                                                {/* Text center relative to new 127x66 button */}
-                                                <text
-                                                    x="63.5"
-                                                    y="42"
-                                                    textAnchor="middle"
-                                                    dominantBaseline="middle"
-                                                    fill="white"
-                                                    fontSize="13"
-                                                    fontWeight="bold"
-                                                    letterSpacing="0.1em"
-                                                    style={{ textTransform: "uppercase" }}
-                                                >
-                                                    DETAIL
-                                                </text>
-                                            </svg>
-                                        </div>
+
                                     </AnimatePresence>
                                 )}
                             </motion.div>

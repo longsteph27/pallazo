@@ -38,7 +38,7 @@ const LuxuryCTAButton = ({
     };
 
     const content = (
-        <span style={{ fontFamily: "var(--font-serif), serif", letterSpacing: "0.25em" }}>
+        <span style={{ fontFamily: "var(--font-serif), serif", letterSpacing: "0.1em" }}>
             {children}
         </span>
     );

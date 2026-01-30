@@ -1,4 +1,7 @@
+"use client";
+
 import * as React from "react";
+import { motion } from "framer-motion";
 
 type BannerSvgProps = {
     title?: string;
@@ -9,10 +12,11 @@ type BannerSvgProps = {
     rightAmount?: string;
     rightSubtitle?: string;
     buttonText?: string;
+    onButtonClick?: () => void;
     className?: string;
 };
 
-export function BannerSvg({
+export function HighlightjackpotStats({
     title = "HIGHLIGHT JACKPOT",
     leftLabel = "TOTAL WINS - ALL CASINOS",
     leftAmount = "546,990.123",
@@ -21,6 +25,7 @@ export function BannerSvg({
     rightAmount = "546,990.123",
     rightSubtitle = "OVER THE LAST YEAR",
     buttonText = "VIEW HISTORY JACKPOT",
+    onButtonClick,
     className,
 }: BannerSvgProps) {
     const JackpotAmount = ({ amount, className }: { amount: string; className?: string }) => {
@@ -28,22 +33,52 @@ export function BannerSvg({
         const main = parts[0];
         const decimal = parts.length > 1 ? "." + parts.slice(1).join(".") : "";
         return (
-            <div className={className}>
+            <motion.div
+                variants={statsVariants}
+                className={className}
+            >
                 <span className="text-[#1A1A1A]">$ </span>
                 <span className="text-[#1A1A1A]">{main}</span>
                 {decimal && <span className="text-[#B09860]">{decimal}</span>}
-            </div>
+            </motion.div>
         );
     };
 
+    const containerVariants = {
+        hidden: { opacity: 0, y: 100 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.8,
+                ease: "easeOut" as any,
+                staggerChildren: 0.2
+            }
+        }
+    };
+
+    const statsVariants = {
+        hidden: { opacity: 0, x: -100 },
+        visible: {
+            opacity: 1,
+            x: 0,
+            transition: { duration: 0.8, ease: "easeOut" as any }
+        }
+    };
+
     return (
-        <div className={className}>
+        <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={containerVariants}
+            className="w-full h-auto"
+        >
             {/* Desktop Version */}
             <div className="hidden md:block">
                 <svg
-                    width="1252"
-                    height="309"
-                    viewBox="0 0 1252 309"
+                    className="w-full h-auto"
+                    viewBox="0 0 1252 268"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                 >
@@ -59,8 +94,11 @@ export function BannerSvg({
                     <path d="M634.235 176.003H645V156.646H628.39V169.436H638.673V163.099H633.004" stroke="url(#paint10_linear_253_389)" strokeWidth="3" />
                     <path d="M639.112 175.997H628.346V195.354H644.956V182.565H634.674V188.902H640.342" stroke="url(#paint11_linear_253_389)" strokeWidth="3" />
                     <rect x="1" y="85" width="1240" height="182" stroke="url(#paint12_radial_253_389)" strokeWidth="2" />
+
+                    {/* Double Path for Top Decor */}
+                    <path d="M27 71.5727H335.058C355.5 71.5727 375.604 65.2004 379.5 49.5C384.37 29.8745 394 -1.48269 434.896 -1.82662C472.234 -2.14063 703.109 -1.95746 813.5 -1.82662C840 -1.8265 865.535 22.4999 867.124 44.8821C869.49 78.2271 916.231 71.5727 916.231 71.5727H1251.5" stroke="url(#paint13_radial_253_389)" strokeWidth="1" opacity="0.6" />
                     <path d="M27 74.5727H335.058C355.5 74.5727 375.604 68.2004 379.5 52.5C384.37 32.8745 394 1.51731 434.896 1.17338C472.234 0.859372 703.109 1.04254 813.5 1.17338C840 1.1735 865.535 25.4999 867.124 47.8821C869.49 81.2271 916.231 74.5727 916.231 74.5727H1251.5" stroke="url(#paint13_radial_253_389)" strokeWidth="2" />
-                    <path d="M509 268H742V285.5C742 298.479 731.479 309 718.5 309H529C517.954 309 509 300.046 509 289V268Z" fill="url(#paint14_radial_253_389)" />
+                    {/* Bỏ path button svg cũ: <path d="M509 268H742V285.5C742 298.479 731.479 309 718.5 309H529C517.954 309 509 300.046 509 289V268Z" fill="url(#paint14_radial_253_389)" /> */}
 
                     {/* ===== Title at top (centered) ===== */}
                     {title && (
@@ -80,31 +118,32 @@ export function BannerSvg({
                     )}
 
                     {/* ===== Left Column ===== */}
-                    <text x="320" y="135" textAnchor="middle" dominantBaseline="middle" fill="#5A5A5A" fontSize="14" fontWeight="500" letterSpacing="0.5">
-                        {leftLabel}
-                    </text>
-                    <text x="320" y="175" textAnchor="middle" dominantBaseline="middle" fill="#2A2A2A" fontSize="42" fontWeight="700" letterSpacing="0">
-                        {leftAmount}
-                    </text>
-                    <text x="320" y="205" textAnchor="middle" dominantBaseline="middle" fill="#8A8A8A" fontSize="12" fontWeight="400" letterSpacing="0.5">
-                        {leftSubtitle}
-                    </text>
+                    <motion.g variants={statsVariants}>
+                        <text x="320" y="135" textAnchor="middle" dominantBaseline="middle" fill="#5A5A5A" fontSize="14" fontWeight="500" letterSpacing="0.5">
+                            {leftLabel}
+                        </text>
+                        <text x="320" y="175" textAnchor="middle" dominantBaseline="middle" fill="#2A2A2A" fontSize="42" fontWeight="700" letterSpacing="0">
+                            {leftAmount}
+                        </text>
+                        <text x="320" y="205" textAnchor="middle" dominantBaseline="middle" fill="#8A8A8A" fontSize="12" fontWeight="400" letterSpacing="0.5">
+                            {leftSubtitle}
+                        </text>
+                    </motion.g>
 
                     {/* ===== Right Column ===== */}
-                    <text x="930" y="135" textAnchor="middle" dominantBaseline="middle" fill="#5A5A5A" fontSize="14" fontWeight="500" letterSpacing="0.5">
-                        {rightLabel}
-                    </text>
-                    <text x="930" y="175" textAnchor="middle" dominantBaseline="middle" fill="#2A2A2A" fontSize="42" fontWeight="700" letterSpacing="0">
-                        {rightAmount}
-                    </text>
-                    <text x="930" y="205" textAnchor="middle" dominantBaseline="middle" fill="#8A8A8A" fontSize="12" fontWeight="400" letterSpacing="0.5">
-                        {rightSubtitle}
-                    </text>
+                    <motion.g variants={statsVariants}>
+                        <text x="930" y="135" textAnchor="middle" dominantBaseline="middle" fill="#5A5A5A" fontSize="14" fontWeight="500" letterSpacing="0.5">
+                            {rightLabel}
+                        </text>
+                        <text x="930" y="175" textAnchor="middle" dominantBaseline="middle" fill="#2A2A2A" fontSize="42" fontWeight="700" letterSpacing="0">
+                            {rightAmount}
+                        </text>
+                        <text x="930" y="205" textAnchor="middle" dominantBaseline="middle" fill="#8A8A8A" fontSize="12" fontWeight="400" letterSpacing="0.5">
+                            {rightSubtitle}
+                        </text>
+                    </motion.g>
 
-                    {/* ===== Button Text ===== */}
-                    <text x="626" y="288" textAnchor="middle" dominantBaseline="middle" fill="#FFFFFF" fontSize="16" fontWeight="600" letterSpacing="1">
-                        {buttonText}
-                    </text>
+                    {/* Bỏ text button svg cũ: <text x="626" y="288" ...>{buttonText}</text> */}
 
                     <defs>
                         <radialGradient id="paint0_radial_253_389" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(614 92) scale(614 274.745)">
@@ -172,22 +211,53 @@ export function BannerSvg({
                         </radialGradient>
                     </defs>
                 </svg>
+
+                {/* HTML Button for Desktop */}
+                <div className="flex justify-center">
+                    <button
+                        type="button"
+                        onClick={onButtonClick}
+                        className={[
+                            "relative bg-[#AC9666] px-12 py-3 uppercase",
+                            "text-[14px] font-bold tracking-[0.1em] text-white",
+                            "rounded-b-2xl shadow-[0_8px_16px_rgba(172,150,102,0.3)]",
+                            "hover:bg-[#C4B183] active:scale-95 transition-all duration-300",
+                            "focus:outline-none whitespace-nowrap",
+                        ].join(" ")}
+                    >
+                        {buttonText}
+                    </button>
+                    {/* Shadow/Glow effect below button */}
+                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-[80%] h-4 bg-[#AC9666]/20 blur-xl z-50" />
+                </div>
             </div>
 
             {/* Mobile Version */}
             <div className="block md:hidden w-full flex flex-col items-center py-6 min-[400px]:py-8 space-y-0 min-[400px]:space-y-5">
                 {/* Title above background */}
-                <h2 className="text-[20px] md:text-[24px] font-serif font-bold text-[#1A1A1A] uppercase tracking-[0.1em] md:tracking-[0.2em] text-center px-4">
+                <h2 className="text-[20px] md:text-[24px] font-serif font-bold text-[#1A1A1A] uppercase tracking-[0.1em] md:tracking-[0.2em] text-center px-4 my-3">
                     {title}
                 </h2>
 
                 {/* Background Area with Borders */}
                 <div
-                    className="w-full relative py-8 min-[400px]:py-10 border-y-[0.5px] border-[#B9A472]/40"
+                    className="w-full relative py-8 min-[400px]:py-10"
                     style={{
                         background: 'radial-gradient(50% 50% at 50% 50%, #EAE2CC 0%, #F9F7ED 100%)',
                     }}
                 >
+                    {/* Top Top Divider (Double Line) */}
+                    <div className="absolute inset-x-0 top-0 flex flex-col gap-[3px]">
+                        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#B9A472] to-transparent opacity-40" />
+                        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#B9A472] to-transparent opacity-60" />
+                    </div>
+
+                    {/* Bottom Top Divider (Double Line) */}
+                    <div className="absolute inset-x-0 bottom-0 flex flex-col gap-[3px]">
+                        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#B9A472] to-transparent opacity-60" />
+                        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#B9A472] to-transparent opacity-40" />
+                    </div>
+
                     {/* Mobile Content (Jackpot Info) */}
                     <div className="relative z-10 flex flex-col items-center space-y-6 min-[400px]:space-y-8">
                         {/* Jackpot 1 */}
@@ -268,13 +338,14 @@ export function BannerSvg({
 
                 {/* Submit Button */}
                 <div className="w-full flex justify-center z-20">
-                    <button className="bg-[#B09860] text-[#FFFFFF] text-[13px] min-[400px]:text-[15px] font-bold uppercase tracking-[0.05em] min-[400px]:tracking-[0.1em] px-8 min-[400px]:px-12 p-2.5 min-[400px]:py-3.5 rounded-b-[20px] min-[400px]:rounded-[12px] shadow-lg">
+                    <button
+                        onClick={onButtonClick}
+                        className="bg-[#B09860] text-[#FFFFFF] text-[13px] min-[400px]:text-[15px] font-bold uppercase px-8 min-[400px]:px-12 p-2.5 min-[400px]:py-3.5 rounded-b-[20px] shadow-lg active:scale-95 transition-all duration-300"
+                    >
                         {buttonText}
                     </button>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }
-
-export default BannerSvg;

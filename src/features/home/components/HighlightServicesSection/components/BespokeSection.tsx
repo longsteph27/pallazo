@@ -1,57 +1,15 @@
+'use client';
+
 import React, { useRef, useState, useEffect, useMemo } from "react";
 import { motion, useMotionValue, useTransform, animate, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import LuxuryCTAButton from "@/components/ui/LuxuryCTAButton";
+import LuxuryButton from "@/components/ui/LuxuryButton";
+import { getServices } from "@/api/services";
+import { ServiceItem } from "@/types/service";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import clsx from "clsx";
 
-const ITEMS = [
-  {
-    id: 1,
-    title: "STAY",
-    image: "https://api-pallazo.tsx.vn/assets/654761ce-1b38-4585-9596-c2f2f7e4392a?key=system-large-contain&v=2026-01-21T08%3A38%3A49.952Z",
-    description: "Discover a sanctuary of sophistication. Our bespoke suites offer an intimate blend of timeless elegance and modern comfort, ensuring every stay is a masterpiece of relaxation."
-  },
-  {
-    id: 2,
-    title: "PREMIER DINING",
-    image: "https://api-pallazo.tsx.vn/assets/b8ead650-e87a-4011-a11f-10558d873d78?key=system-large-contain&v=2026-01-21T08%3A38%3A49.862Z",
-    description: "Savor the extraordinary. From Michelin-inspired menus to intimate private dining, our culinary artisans craft every dish to surprise and delight the most discerning palates."
-  },
-  {
-    id: 3,
-    title: "SPA INDULGENCE",
-    image: "https://api-pallazo.tsx.vn/assets/70c21057-4f53-4203-bac4-724aa7732749?key=system-large-contain&v=2026-01-21T08%3A38%3A48.432Z",
-    description: "Total rejuvenation for mind, body, and soul. Experience personalized wellness rituals and world-class treatments in a serene environment designed for pure tranquility."
-  },
-  {
-    id: 4,
-    title: "CONCIERGE",
-    image: "https://api-pallazo.tsx.vn/assets/654761ce-1b38-4585-9596-c2f2f7e4392a?key=system-large-contain&v=2026-01-21T08%3A38%3A49.952Z",
-    description: "Your every wish, masterfully orchestrated. Our elite concierge team provides seamless, personalized service to ensure your visit is effortless and unforgettable."
-  },
-  {
-    id: 5,
-    title: "EVENTS",
-    image: "https://api-pallazo.tsx.vn/assets/654761ce-1b38-4585-9596-c2f2f7e4392a?key=system-large-contain&v=2026-01-21T08%3A38%3A49.952Z",
-    description: "Host your most prestigious moments. Whether it's a grand gala or an intimate corporate retreat, our venues provide the perfect backdrop for extraordinary celebrations."
-  },
-  {
-    id: 6,
-    title: "SHOPPING",
-    image: "https://api-pallazo.tsx.vn/assets/654761ce-1b38-4585-9596-c2f2f7e4392a?key=system-large-contain&v=2026-01-21T08%3A38%3A49.952Z",
-    description: "Curated luxury at your fingertips. Discover an exclusive selection of designer boutiques and artisan treasures, offering the finest in global fashion and craftsmanship."
-  },
-  {
-    id: 7,
-    title: "GAMING",
-    image: "https://api-pallazo.tsx.vn/assets/654761ce-1b38-4585-9596-c2f2f7e4392a?key=system-large-contain&v=2026-01-21T08%3A38%3A49.952Z",
-    description: "Elevate your play. Enjoy a curated world of high-end EGM play, private salon rooms, and discreet VIP privileges, all thoughtfully designed to elevate every moment."
-  },
-  {
-    id: 8,
-    title: "VIP LOUNGE",
-    image: "https://api-pallazo.tsx.vn/assets/654761ce-1b38-4585-9596-c2f2f7e4392a?key=system-large-contain&v=2026-01-21T08%3A38%3A49.952Z",
-    description: "Exclusivity redefined. Retreat to a private sanctuary where premium amenities and personalized service cater to your every need in an atmosphere of ultimate discretion."
-  },
-];
+// Geometric constants
 
 const SLICE_PATHS = [
   "M15.208 531.062L301.708 563.562C314.108 465.163 366.541 401.562 391.208 382.062L192.208 173.562C61.208 297.562 22.208 457.562 15.208 531.062Z",
@@ -66,11 +24,62 @@ const SLICE_PATHS = [
 
 const WHEEL_SIZE = 1192;
 
-export default function BespokeSection() {
+interface BespokeSectionProps {
+  title?: string;
+  description?: string;
+  initialServices?: ServiceItem[];
+  totalCount?: number;
+}
+
+export default function BespokeSection({ title, description, initialServices = [], totalCount: initialTotal = 0 }: BespokeSectionProps) {
   const rotationMotion = useMotionValue(0);
   const imageRotation = useTransform(rotationMotion, (r) => -r);
+
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [services, setServices] = useState<ServiceItem[]>(initialServices);
+  const [totalCount, setTotalCount] = useState(initialTotal);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
+
+  const ITEMS_PER_PAGE = 8;
+
+  useEffect(() => {
+    // Only fetch if it's not the first page or if we don't have initial services
+    if (page === 1 && initialServices.length > 0) return;
+
+    const fetchServices = async () => {
+      setLoading(true);
+      const data = await getServices(page, ITEMS_PER_PAGE);
+      setServices(data.items);
+      setTotalCount(data.total);
+      setLoading(false);
+    };
+    fetchServices();
+  }, [page, initialServices.length]);
+
+  // Ensure we always have 8 slots for the wheel
+  const wheelItems = useMemo(() => {
+    const filledItems = [...services];
+    while (filledItems.length < ITEMS_PER_PAGE) {
+      filledItems.push({
+        id: `empty-${filledItems.length}`,
+        title: "",
+        description: "",
+        image: ""
+      });
+    }
+    return filledItems;
+  }, [services]);
+
+  useMotionValueEvent(rotationMotion, "change", (latest) => {
+    // Determine current active index (normalized to 0-7)
+    const normalized = ((Math.round(((latest as number) || 0) / 45) % 8) + 8) % 8;
+    if (normalized !== activeIndex) {
+      setActiveIndex(normalized);
+    }
+  });
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -120,7 +129,7 @@ export default function BespokeSection() {
   };
 
   const labelPaths = useMemo(() => {
-    return ITEMS.map((_, i) => {
+    return Array.from({ length: 8 }).map((_, i) => {
       const centerX = WHEEL_SIZE / 2;
       const centerY = WHEEL_SIZE / 2;
       const anglePadding = isMobile ? 1.2 : 0;
@@ -140,21 +149,67 @@ export default function BespokeSection() {
   }, [isMobile]);
 
   // Dynamic state for central content
-  const [activeIndex, setActiveIndex] = React.useState(0);
-
-  useMotionValueEvent(rotationMotion, "change", (latest) => {
-    // Determine current active index (normalized to 0-7)
-    const normalized = ((Math.round(latest / 45) % 8) + 8) % 8;
-    if (normalized !== activeIndex) {
-      setActiveIndex(normalized);
-    }
-  });
-
-  const activeItem = ITEMS[activeIndex];
+  const activeItem = wheelItems[activeIndex];
   const isAnimating = useRef(false);
 
+  // Animation variants for entrance effects
+  const wheelVariants = {
+    hidden: { y: 200, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 1.2, ease: "easeOut" as any }
+    }
+  };
+
+  const cardContainerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        delayChildren: 0.6
+      }
+    }
+  };
+
+  const getCardVariants = (index: number) => {
+    // Calculate the position of each card
+    const desktopAngles = [-165, -120, -60, -15, 15, 60, 120, 165];
+    const mobileAngles = Array.from({ length: 8 }).map((_, idx) => (idx * 45) - 90);
+
+    const midAngle = isMobile ? mobileAngles[index] : desktopAngles[index];
+    const midRadius = isMobile ? 425 : 460;
+
+    // Calculate the offset from center (where the card should move to)
+    const offsetX = midRadius * Math.cos((midAngle * Math.PI) / 180);
+    const offsetY = midRadius * Math.sin((midAngle * Math.PI) / 180);
+
+    // Calculate position at top of circle (0 degrees = top, -90 degrees in standard coords)
+    const topAngle = -90; // Top of the circle
+    const topX = midRadius * Math.cos((topAngle * Math.PI) / 180);
+    const topY = midRadius * Math.sin((topAngle * Math.PI) / 180);
+
+    return {
+      hidden: {
+        x: topX - offsetX, // Start from top center of wheel
+        y: topY - offsetY,
+        scale: 0.3,
+        opacity: 0
+      },
+      visible: {
+        x: 0, // Move to final position
+        y: 0,
+        scale: 1,
+        opacity: 1,
+        transition: {
+          duration: 0.8,
+          ease: [0.34, 1.56, 0.64, 1] as any
+        }
+      }
+    };
+  };
+
   const rotateWheel = (delta: number) => {
-    if (isAnimating.current) return;
+    if (isAnimating.current || services.length <= 4) return;
     isAnimating.current = true;
 
     // On mobile: rotate 45deg (1 service), on desktop: rotate 180deg (4 services)
@@ -187,7 +242,6 @@ export default function BespokeSection() {
 
   return (
     <section className="relative w-full bg-[#F9F7ED] flex flex-col " onWheel={onWheel}>
-
       <motion.div
         className="relative"
         onPan={onPan}
@@ -199,6 +253,10 @@ export default function BespokeSection() {
           {/* 2. ROTATING LAYER - Contains ONLY the wheel */}
           <motion.div
             className="relative transform-gpu"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={wheelVariants}
             style={{
               width: currentWheelSize,
               height: currentWheelSize,
@@ -219,7 +277,7 @@ export default function BespokeSection() {
             >
               <defs>
                 {/* 1. CLIP PATHS */}
-                {ITEMS.map((_, i) => (
+                {Array.from({ length: 8 }).map((_, i) => (
                   <clipPath key={`clip-${i}`} id={`clip-slice-${i}`}>
                     <path d={isMobile ? generateSlicePath(i) : SLICE_PATHS[i]} />
                   </clipPath>
@@ -265,58 +323,71 @@ export default function BespokeSection() {
               {/* BACKGROUND WHEEL */}
               <circle cx="596" cy="596" r="595.5" fill="url(#paint0_radial_bg)" stroke="url(#paint1_radial_border)" />
 
-              {/* SLICES */}
-              {ITEMS.map((item, i) => {
-                // Desktop slice angles
-                const desktopAngles = [-153.5, -109, -71, -26, 25, 71, 109, 157];
-                // Mobile slice angles (Perfect 45 deg intervals)
-                const mobileAngles = ITEMS.map((_, idx) => (idx * 45) - 90);
+              <motion.g
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={cardContainerVariants}
+              >
+                {wheelItems.map((item, i) => {
+                  // Desktop slice angles
+                  const desktopAngles = [-165, -120, -60, -15, 15, 60, 120, 165];
+                  // Mobile slice angles (Perfect 45 deg intervals)
+                  const mobileAngles = Array.from({ length: 8 }).map((_, idx) => (idx * 45) - 90);
 
-                const midAngle = isMobile ? mobileAngles[i] : desktopAngles[i];
-                const midRadius = isMobile ? 425 : 460;
-                const cx = 635 + midRadius * Math.cos((midAngle * Math.PI) / 180);
-                const cy = 650 + midRadius * Math.sin((midAngle * Math.PI) / 180);
+                  const midAngle = isMobile ? mobileAngles[i] : desktopAngles[i];
+                  const midRadius = isMobile ? 425 : 460;
+                  const cx = 635 + midRadius * Math.cos((midAngle * Math.PI) / 180);
+                  const cy = 650 + midRadius * Math.sin((midAngle * Math.PI) / 180);
 
-                return (
-                  <g key={item.id}>
-                    {/* Image fitted to slice & counter-rotated to stay upright */}
-                    <g clipPath={`url(#clip-slice-${i})`}>
-                      <motion.g
-                        style={{
-                          transformOrigin: `${cx}px ${cy}px`,
-                          rotate: imageRotation
-                        }}
-                      >
-                        <image
-                          href={item.image}
-                          x={cx - 275}
-                          y={cy - 275}
-                          width="470"
-                          height="470"
-                          preserveAspectRatio="xMidYMid slice"
-                          className="opacity-95"
-                        />
-                      </motion.g>
-                    </g>
+                  const hasData = item.title && item.image;
 
-                    <path d={isMobile ? generateSlicePath(i) : SLICE_PATHS[i]} stroke="#D4C5A6" strokeWidth="1" fill="none" />
-
-                    {/* Curved Text extracted directly from geometry */}
-                    <text
-                      fill="white"
-                      fontSize={isMobile ? "12" : "11"}
-                      fontWeight="600"
-                      dy={isMobile ? "-20" : "-14"}
-                      className="uppercase tracking-[0.4em] pointer-events-none drop-shadow-xl"
-                      style={{ fontFamily: 'var(--font-serif), serif' }}
+                  return (
+                    <motion.g
+                      key={item.id}
+                      variants={getCardVariants(i)}
                     >
-                      <textPath href={`#label-path-${i}`} startOffset="50%" textAnchor="middle">
-                        {item.title}
-                      </textPath>
-                    </text>
-                  </g>
-                );
-              })}
+                      {/* Image fitted to slice & counter-rotated to stay upright */}
+                      {hasData && (
+                        <g clipPath={`url(#clip-slice-${i})`}>
+                          <motion.g
+                            style={{
+                              transformOrigin: `${cx}px ${cy}px`,
+                              rotate: imageRotation
+                            }}
+                          >
+                            <image
+                              href={item.image}
+                              x={cx - 275}
+                              y={cy - 275}
+                              width="470"
+                              height="470"
+                              preserveAspectRatio="xMidYMid slice"
+                              className="opacity-95"
+                            />
+                          </motion.g>
+                        </g>
+                      )}
+
+                      <path d={isMobile ? generateSlicePath(i) : SLICE_PATHS[i]} stroke="#D4C5A6" strokeWidth="1" fill="none" />
+
+                      {/* Curved Text extracted directly from geometry */}
+                      <text
+                        fill="white"
+                        fontSize={isMobile ? "12" : "11"}
+                        fontWeight="600"
+                        dy={isMobile ? "-20" : "-14"}
+                        className="uppercase tracking-[0.4em] pointer-events-none drop-shadow-xl"
+                        style={{ fontFamily: 'var(--font-serif), serif' }}
+                      >
+                        <textPath href={`#label-path-${i}`} startOffset="50%" textAnchor="middle">
+                          {item.title}
+                        </textPath>
+                      </text>
+                    </motion.g>
+                  );
+                })}
+              </motion.g>
 
               {/* SIDE CARDS (Desktop Only) */}
               {!isMobile && (
@@ -332,16 +403,49 @@ export default function BespokeSection() {
           <div className="absolute inset-x-0 bottom-0 z-40 pointer-events-none flex flex-col items-center">
             {/* Dynamic Center Hub Text with Fade Transition */}
             <div className={`relative ${isMobile ? 'h-[200px]' : 'h-[240px]'} w-full flex flex-col items-center justify-start pt-14`}>
-              <div className="text-center px-10 md:px-16 max-w-2xl">
-                <h2 className="text-lg md:text-[26px] font-serif font-bold text-[#2A2A2A] uppercase leading-tight mb-4">
-                  BESPOKE GAMING & <br /> PRIVILEGES
-                </h2>
-                <p className={`${isMobile ? 'text-[13px]' : 'text-[15px]'} font-light text-[#4A4A4A] leading-relaxed tracking-wide`}>
-                  Enjoy a curated world of high-end EGM play, private salon rooms, multilingual hospitality, gourmet dining, and discreet VIP privileges, each detail thoughtfully designed to elevate every moment of your visit.
-                </p>
-              </div>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key="central-content" // Static key as content is constant
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-center px-10 md:px-16 max-w-2xl"
+                >
+                  <h2 className="text-lg md:text-[26px] font-serif font-bold text-[#2A2A2A] uppercase leading-tight mb-4">
+                    {title}
+                  </h2>
+                  <p className={`${isMobile ? 'text-[13px]' : 'text-[15px]'} font-light text-[#4A4A4A] leading-relaxed tracking-wide`}>
+                    {description}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
+
+          {/* Pagination Controls */}
+          {totalCount > ITEMS_PER_PAGE && (
+            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 md:px-12 z-50 pointer-events-none">
+              <button
+                onClick={() => setPage(p => Math.max(1, p - 1))}
+                disabled={page === 1}
+                className={clsx(
+                  "w-10 h-10 md:w-12 md:h-12 rounded-full border border-[#BBA880] flex items-center justify-center text-[#BBA880] bg-white/50 backdrop-blur-sm pointer-events-auto transition-all hover:bg-[#BBA880] hover:text-white disabled:opacity-30 disabled:pointer-events-none",
+                )}
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button
+                onClick={() => setPage(p => p + 1)}
+                disabled={page * ITEMS_PER_PAGE >= totalCount}
+                className={clsx(
+                  "w-10 h-10 md:w-12 md:h-12 rounded-full border border-[#BBA880] flex items-center justify-center text-[#BBA880] bg-white/50 backdrop-blur-sm pointer-events-auto transition-all hover:bg-[#BBA880] hover:text-white disabled:opacity-30 disabled:pointer-events-none",
+                )}
+              >
+                <ChevronRight size={24} />
+              </button>
+            </div>
+          )}
 
 
         </div>
@@ -362,9 +466,9 @@ export default function BespokeSection() {
 
               <div className="h-4 w-px bg-[#D4C5A6]"></div>
 
-              <LuxuryCTAButton onClick={() => console.log("Explore clicked")}>
+              <LuxuryButton onClick={() => console.log("Explore clicked")}>
                 EXPLORE OUR PREVILEGES
-              </LuxuryCTAButton>
+              </LuxuryButton>
 
               {/* Right Vertical Accents */}
               <div className="h-4 w-px bg-[#D4C5A6]"></div>

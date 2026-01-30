@@ -1,47 +1,107 @@
+'use client';
+
 import LuxuryButton from '@/components/ui/LuxuryButton';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
-function LoyalProgramSection() {
+interface LoyalProgramSectionProps {
+  title?: string;
+  description?: string;
+  image?: {
+    id: string;
+    filename_disk: string;
+  };
+}
+
+function LoyalProgramSection({ title, description, image }: LoyalProgramSectionProps) {
+  const bgImage = image
+    ? `https://api-pallazo.tsx.vn/assets/${image.id}`
+    : undefined;
+
   return (
     <section className="relative min-h-[800px] flex items-center justify-center overflow-hidden bg-[#3e322b]">
-      {/* Background Image Placeholder - Replace with actual image when available */}
+      {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src="/assets/bg-lifestyle.jpg" // Placeholder path (user needs to provide asset)
-          alt="Lifestyle Background"
-          fill
-          className="object-cover opacity-80 mix-blend-overlay"
-          priority
-        />
+        {bgImage && (
+          <Image
+            src={bgImage}
+            alt={title || "Background"}
+            fill
+            className="object-cover opacity-80 mix-blend-overlay"
+            priority
+          />
+        )}
         {/* Dark overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30"></div>
       </div>
 
+      {/* Animated Curtain Overlays - Reveal from sides to center */}
+      {/* Left curtain - covers left half and shrinks to the middle (right origin) */}
+      <motion.div
+        className="absolute top-0 left-0 bottom-0 w-1/2 bg-[#3e322b] z-[5]"
+        initial={{ scaleX: 1 }}
+        whileInView={{ scaleX: 0 }}
+        viewport={{ once: true, margin: "-10%" }}
+        transition={{ duration: 1.5, ease: [0.65, 0, 0.35, 1], delay: 0.1 }}
+        style={{ transformOrigin: 'right' }}
+      />
+      {/* Right curtain - covers right half and shrinks to the middle (left origin) */}
+      <motion.div
+        className="absolute top-0 right-0 bottom-0 w-1/2 bg-[#3e322b] z-[5]"
+        initial={{ scaleX: 1 }}
+        whileInView={{ scaleX: 0 }}
+        viewport={{ once: true, margin: "-10%" }}
+        transition={{ duration: 1.5, ease: [0.65, 0, 0.35, 1], delay: 0.1 }}
+        style={{ transformOrigin: 'left' }}
+      />
+
       <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 max-w-5xl mx-auto w-full h-full pb-20">
 
         {/* Text Group */}
-        <div className="mb-12 md:mb-20 space-y-6">
-          <h2 className="text-3xl md:text-5xl lg:text-[3.5rem] font-serif text-[#F9F7ED] tracking-wide leading-tight">
-            MORE THAN POINTS, IT’S A LIFESTYLE
+        <motion.div
+          className="space-y-6"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+        >
+          <h2 className=" text-2xl md:text-4xl lg:text-5xl font-serif text-[#F9F7ED] tracking-wide leading-tight uppercase">
+            {title && (
+              <span dangerouslySetInnerHTML={{ __html: title.replace(/\n/g, '<br/>') }} />
+            )}
           </h2>
           <p className="text-[#F9F7ED]/90 text-sm md:text-base max-w-3xl mx-auto leading-relaxed font-light tracking-wide">
-            Palazzo Club’s membership tiers offer tailored rewards, insider experiences, and prestige that lasts.<br className="hidden md:block" />
-            Earn points while you play and unlock real-world perks, from flight credits to fine dining.
+            {description && (
+              <span dangerouslySetInnerHTML={{ __html: description }} />
+            )}
           </p>
-        </div>
+        </motion.div>
 
-        {/* Card Interaction Visual Placeholder (Mimicking the hand holding card) */}
-        {/* Ideally this whole section is a background image, but we can structure the layout for the button placement */}
+        {/* Card Interaction Visual Placeholder */}
         <div className="relative w-full h-[300px] md:h-[400px] mb-8 flex flex-col items-center">
           {/* The vertical line effect */}
-          <div className="absolute top-[-50px] bottom-[60px] w-[1px] bg-gradient-to-b from-transparent via-[#D4C5A6]/50 to-transparent"></div>
+          <motion.div
+            className="absolute top-[-50px] bottom-[60px] w-[1px] bg-gradient-to-b from-transparent via-[#D4C5A6]/50 to-transparent"
+            initial={{ scaleY: 0 }}
+            whileInView={{ scaleY: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.4 }}
+            style={{ transformOrigin: 'top' }}
+          />
         </div>
 
 
         {/* CTA Button */}
-        <button className="outline-double outline-2 outline-[#D2C29E] outline-offset-2 rounded-[6px] px-4 py-2 text-white">
-          See Detail
-        </button>
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 1.2 }}
+        >
+          <button className="outline-double outline-2 outline-[#D2C29E] outline-offset-2 rounded-[6px] px-4 py-2 text-white hover:bg-[#D2C29E]/10 transition-colors">
+            See Detail
+          </button>
+        </motion.div>
       </div>
     </section>
   );
