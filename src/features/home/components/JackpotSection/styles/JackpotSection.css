@@ -19,7 +19,7 @@
 }
 
 .jackpot-title {
-  font-family: 'Georgia', 'Times New Roman', serif;
+  font-family: var(--font-collier), serif;
   font-size: 32px;
   font-weight: 700;
   color: white;
@@ -56,7 +56,6 @@
 }
 
 .jackpot-amount {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 48px;
   font-weight: 700;
   color: #5a4032;
@@ -115,23 +114,22 @@
     font-size: 24px;
     padding: 12px 32px;
   }
-  
+
   .jackpot-displays {
     flex-direction: column;
     gap: 30px;
   }
-  
+
   .jackpot-divider {
     padding: 20px 0;
   }
-  
+
   .divider-circle {
     width: 8px;
     height: 8px;
   }
-  
+
   .jackpot-amount {
     font-size: 36px;
   }
 }
-

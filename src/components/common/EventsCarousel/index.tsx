@@ -4,6 +4,7 @@ import { useMemo, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { EventCardData } from "@/features/home/components/EventsSection/components/EventsSection";
 import LuxuryCTAButton from "@/components/ui/LuxuryCTAButton";
+import { DetailEventSVG } from "@/components/icons";
 
 interface CarouselProps {
     slides: EventCardData[];
@@ -58,14 +59,14 @@ export default function Carousel({
 
     const handlePrev = () => {
         if (!len) return;
-        setDirection(1);
-        setIndex(nextIndex);
+        setDirection(-1);
+        setIndex(prevIndex);
     };
 
     const handleNext = () => {
         if (!len) return;
-        setDirection(-1);
-        setIndex(prevIndex);
+        setDirection(1);
+        setIndex(nextIndex);
     };
 
     // Layout chuẩn theo SVG chuẩn bạn đưa (base 1440x871)
@@ -526,6 +527,11 @@ export default function Carousel({
                         <path d="M405 579.552V575.062L400.993 577.372L405 579.552Z" fill="url(#paint12_linear_263_608)" />
                     </g>
                 </svg>
+                {/* <DetailEventSVG
+                    text="DETAIL"
+                    className="absolute bottom-[1%] left-1/2 -translate-x-1/2 z-30 md:w-32 w-24"
+                /> */}
+                <DetailEventSVG className="absolute bottom-[1%] left-1/2 -translate-x-1/2 z-30 md:w-32 w-24" text="DETAIL" />
             </div>
         </div>
     );

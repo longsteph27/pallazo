@@ -16,7 +16,7 @@ body {
 
 body {
   /* Mobile Safari fix */
-  font-family: 'Georgia', 'Times New Roman', serif;
+  font-family: Arial, Helvetica, sans-serif;
   color: #000000;
   /* Prevent layout shift when scrollbar appears/disappears on Windows */
   scrollbar-gutter: stable;
@@ -149,6 +149,22 @@ body {
   border-radius: 10px;
 }
 
+
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #ac9666;
+}
+
+/* Detail Button Trace Animation */
+.group:hover .detail-trace-path {
+  animation: detail-trace 1.5s linear infinite;
+}
+
+@keyframes detail-trace {
+  0% {
+    stroke-dashoffset: 300;
+  }
+
+  100% {
+    stroke-dashoffset: -300;
+  }
 }

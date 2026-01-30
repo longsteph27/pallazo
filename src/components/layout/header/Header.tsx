@@ -113,7 +113,7 @@ function Header() {
               <Link
                 key={link.label}
                 href={link.href}
-                className="text-white text-xl font-serif tracking-widest uppercase hover:text-[#B09860] transition-colors"
+                className="text-white text-xl font-sans tracking-widest uppercase hover:text-[#B09860] transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {link.label}

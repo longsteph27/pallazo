@@ -6,6 +6,8 @@ import BannerSlider from '@/components/common/Banner';
 import ResponsibleGamblingSection from '../gaming/components/ResponsibleGamblingSection';
 import { getAboutUsApi } from '@/lib/api-directus';
 import { getI18n } from '@/lib/i18n';
+import AppPreview from '@/components/AppPreview/AppPreview';
+import ScrollReveal from '@/components/common/ScrollReveal';
 
 interface AboutUsPageProps {
     lang?: string;
@@ -29,8 +31,12 @@ export default async function AboutUsPage({ lang = 'en' }: AboutUsPageProps) {
     })) || [];
 
     const bannerImages = aboutUsData?.banners?.map((b: any) =>
-        `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${b.directus_files_id.id}`
+        `${process.env.NEXT_PUBLIC_DIRECTUS_URL || 'https://api-pallazo.tsx.vn'}/assets/${b.directus_files_id.id}`
     ) || ["https://api-pallazo.tsx.vn/assets/5dfa564a-17ae-4605-9e61-65b36a032a01"];
+
+    const imgResponsibleGambling = aboutUsData?.img_responsible_gambling
+        ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL || 'https://api-pallazo.tsx.vn'}/assets/${aboutUsData.img_responsible_gambling}`
+        : undefined;
 
     return (
         <main className="min-h-screen">
@@ -51,11 +57,16 @@ export default async function AboutUsPage({ lang = 'en' }: AboutUsPageProps) {
                     subtitle={t.coreValuesSubtitle}
                 />
             </div>
-            <ResponsibleGamblingSection
-                content={translation.content_responsible_gambling_section}
-                title={t.responsibleGamblingTitle}
-                buttonLabel={t.ctaButton}
-            />
+            <ScrollReveal direction="left">
+                <ResponsibleGamblingSection
+                    content={translation.content_responsible_gambling_section}
+                    title={t.responsibleGamblingTitle}
+                    buttonLabel={t.ctaButton}
+                    image={imgResponsibleGambling}
+                />
+            </ScrollReveal>
+
+            <AppPreview />
         </main>
     );
 }

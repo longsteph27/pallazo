@@ -7,6 +7,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import Image from 'next/image';
 import StatsJackpotCard from '@/features/home/components/Stats/StatsJackpot';
+import { cn } from '@/lib/utils';
 
 interface BannerProps {
     images: string[];
@@ -75,8 +76,8 @@ const Banner = ({
 
             {/* Content Overlay */}
             {(title || subtitle) && (
-                <div className="absolute inset-x-0 w-[60%] top-[33%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 flex flex-col items-center justify-center text-center px-8 pointer-events-none">
-                    <h2 className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif leading-[1.5] font-bold uppercase drop-shadow-2xl">
+                <div className={cn("absolute inset-x-0 w-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 flex flex-col items-center justify-center text-center px-8 pointer-events-none", showJackpotStats ? "top-[33%] md:top-[32%]" : "top-[50%]")}>
+                    <h2 className="text-white text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-serif leading-[1.5] font-bold uppercase drop-shadow-2xl">
                         {title}
                         {subtitle && (
                             <>

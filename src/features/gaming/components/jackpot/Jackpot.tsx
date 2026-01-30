@@ -2,6 +2,7 @@ import React from 'react';
 import GameType from '../GameType';
 import { JackpotIcon } from '@/features/home/components/JackpotSection/components/JackpotIcon';
 import Button from '@/components/ui/Button';
+import TransparentButton from '@/components/ui/TransparentButton';
 
 const JackpotGame = ({ onClose, data }: { onClose?: () => void; data?: any }) => {
     const translation = data?.translations?.[0] || {};
@@ -22,7 +23,7 @@ const JackpotGame = ({ onClose, data }: { onClose?: () => void; data?: any }) =>
             subtitle={translation.headline || "YOUR JACKPOT COULD BE NEXT AT PALAZZO!"}
             description={translation.content || "Our progressive jackpot system is a key element of the Palazzo experience, providing guests with thrilling, real-time excitement and the chance to witness remarkable wins. View live Jackpot History and explore our full range of jackpot types here."}
         >
-            <div className='px-4 lg:px-8 w-full flex-1 flex flex-col min-h-0 pb-24 lg:pb-8'>
+            <div className='px-4 lg:px-8 w-full flex-1 flex flex-col min-h-0 pb-12 lg:pb-8'>
                 <div className='w-full h-full pt-[1px] px-[1px] bg-gradient-to-b from-[#B29E71] to-[#F9F7ED] relative rounded-xl overflow-hidden flex flex-col'>
                     <div className='w-full h-full bg-gradient-to-t from-[#01050F] via-[70%] to-[#1E3D58] rounded-xl flex flex-col overflow-hidden'>
 
@@ -61,14 +62,12 @@ const JackpotGame = ({ onClose, data }: { onClose?: () => void; data?: any }) =>
             </div>
 
             {/* CTA Button Overlay */}
-            <div className='absolute bottom-6 lg:bottom-12 left-1/2 -translate-x-1/2 z-50 w-[90%] lg:w-auto'>
-                <div className="p-[1px] rounded-lg bg-gradient-to-b from-[#B29E71] to-[#F9F7ED]">
-                    <Button
-                        className='px-8 lg:px-12 py-3 lg:py-4 w-full rounded-lg shadow-lg hover:brightness-110 transition-all uppercase text-xs lg:text-sm tracking-widest font-bold bg-[#01050F] text-[#DCCBA1] border-none'
-                    >
-                        VIEW HISTORY JACKPOT
-                    </Button>
-                </div>
+            <div className='absolute bottom-6 lg:bottom-12 left-1/2 -translate-x-1/2 z-50 lg:w-auto'>
+                {/* <div className="p-[1px] rounded-lg bg-gradient-to-b from-[#B29E71] to-[#F9F7ED]"> */}
+                <TransparentButton className='whitespace-nowrap'>
+                    VIEW HISTORY JACKPOT
+                </TransparentButton>
+                {/* </div> */}
             </div>
             <div className='absolute bottom-0 right-0 left-0 bg-gradient-to-t from-[#01050F] to-transparent z-40 w-full h-32 pointer-events-none' />
         </GameType>

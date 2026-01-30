@@ -232,11 +232,19 @@ export default function BespokeSection({ title, description, initialServices = [
   };
 
   const onPan = (_event: any, info: { delta: { x: number; y: number } }) => {
-    // Combine horizontal and vertical pan for rotation
-    const combinedDelta = info.delta.x + info.delta.y;
-
-    if (Math.abs(combinedDelta) > 5) {
-      rotateWheel(combinedDelta);
+    if (isMobile) {
+      // On mobile, only rotate if horizontal movement is dominant and meets threshold
+      // to allow the browser to handle vertical scrolling naturally
+      const horizontalThreshold = 3;
+      if (Math.abs(info.delta.x) > horizontalThreshold && Math.abs(info.delta.x) > Math.abs(info.delta.y)) {
+        rotateWheel(info.delta.x);
+      }
+    } else {
+      // Desktop behavior: combine deltas for smoother mouse drag rotation
+      const combinedDelta = info.delta.x + info.delta.y;
+      if (Math.abs(combinedDelta) > 5) {
+        rotateWheel(combinedDelta);
+      }
     }
   };
 
@@ -245,10 +253,10 @@ export default function BespokeSection({ title, description, initialServices = [
       <motion.div
         className="relative"
         onPan={onPan}
-        style={{ touchAction: 'none' }}
+        style={{ touchAction: 'pan-y' }}
       >
         {/* 1. MASKED VIEWPORT CONTAINER - Set to a specific height that wraps the visible part of the wheel */}
-        <div className="relative w-full h-[550px] md:h-[680px] flex items-end justify-center overflow-hidden">
+        <div className="relative w-full h-[470px] md:h-[680px] flex items-end justify-center overflow-hidden">
 
           {/* 2. ROTATING LAYER - Contains ONLY the wheel */}
           <motion.div

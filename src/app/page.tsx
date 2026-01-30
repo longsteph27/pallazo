@@ -11,13 +11,15 @@ import { getHomePageData } from '@/api/home';
 import { getServices } from '@/api/services';
 import MarqueeBanner from '@/features/home/components/HighlightServicesSection/components/MarqueeBanner';
 import { HighlightjackpotStats } from '@/components/common/Jackpot/HighlightjackpotStats';
+import { getMobileAppData } from '@/api/mobile-app';
 
 export default async function Home({
   searchParams,
 }: {
-  searchParams?: { [key: string]: string | string[] | undefined };
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const lang = (searchParams?.lang as string) || 'en';
+  const resolvedSearchParams = await searchParams;
+  const lang = (resolvedSearchParams?.lang as string) || 'en';
   const [homeData, servicesData] = await Promise.all([
     getHomePageData(lang),
     getServices(1, 8, lang)
@@ -57,15 +59,15 @@ export default async function Home({
       </section>
 
       <ScrollReveal>
-        <EventsSection />
+        <EventsSection lang={lang} />
       </ScrollReveal>
 
-        <HighlightServicesSection
-          title={homeData?.translation?.title_privileges}
-          description={homeData?.translation?.description_privileges}
-          initialServices={servicesData.items}
-          totalCount={servicesData.total}
-        />
+      <HighlightServicesSection
+        title={homeData?.translation?.title_privileges}
+        description={homeData?.translation?.description_privileges}
+        initialServices={servicesData.items}
+        totalCount={servicesData.total}
+      />
 
       <ScrollReveal>
         <MarqueeBanner />
@@ -80,7 +82,7 @@ export default async function Home({
       </ScrollReveal>
 
       <ScrollReveal>
-        <AppPreview />
+        <AppPreview lang={lang} />
       </ScrollReveal>
     </div>
   );

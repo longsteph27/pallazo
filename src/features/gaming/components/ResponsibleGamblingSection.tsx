@@ -1,15 +1,20 @@
+import LuxuryCTAButton from '@/components/ui/LuxuryCTAButton';
+import TransparentButton from '@/components/ui/TransparentButton';
 import React from 'react';
 
 const ResponsibleGamblingSection = ({
     content,
     title = "RESPONSIBLE GAMBLING",
-    buttonLabel = "CTA BUTTON"
+    buttonLabel = "CTA BUTTON",
+    image
 }: {
     content?: string;
     title?: string;
     buttonLabel?: string;
+    image?: string;
 }) => {
     const defaultContent = "Palazzo Club is dedicated to promoting responsible gaming in a safe and supportive environment. We believe gaming should always remain a form of leisure and are committed to protecting our guests from the risks of problematic play.";
+    const backgroundImage = image || "https://api-pallazo.tsx.vn/assets/5dfa564a-17ae-4605-9e61-65b36a032a01";
 
     return (
         <section className="relative w-full text-white overflow-hidden bg-[#0E231E] mb-12 md:mb-16 lg:mb-24">
@@ -19,27 +24,27 @@ const ResponsibleGamblingSection = ({
                 <div
                     className="w-full h-[300px] bg-cover bg-center"
                     style={{
-                        backgroundImage: "url('/path-to-slot-machine.jpg')",
+                        backgroundImage: `url('${backgroundImage}')`,
                         backgroundColor: '#1a1a1a'
                     }}
                 />
 
                 {/* Content Section with padding and rounded corners */}
                 <div className="p-4">
-                    <div className="bg-gradient-to-b from-[#313F35] to-[#A8C4B0] p-6 rounded-2xl">
-                        <h2 className="text-2xl font-serif font-bold mb-4 tracking-wide">
-                            {title}
-                        </h2>
+                    <div className='pt-[1px] pr-[1px] bg-gradient-to-tr from-transparent via-transparent to-[#F1D1A1] rounded-2xl'>
+                        <div className="bg-gradient-to-r from-[#313F35] via-[#313F35] to-[#A8C4B0] p-6 rounded-2xl">
+                            <h2 className="text-2xl font-serif font-bold mb-4 tracking-wide">
+                                {title}
+                            </h2>
 
-                        <div
-                            className="space-y-3 text-gray-200 text-sm leading-relaxed mb-6"
-                            dangerouslySetInnerHTML={{ __html: content || defaultContent }}
-                        />
+                            <div
+                                className="space-y-3 text-gray-200 text-sm leading-relaxed mb-6"
+                                dangerouslySetInnerHTML={{ __html: content || defaultContent }}
+                            />
 
-                        <div>
-                            <button className="bg-[#A68A56] hover:bg-[#8c7345] text-white font-bold py-3 px-6 rounded-lg transition-colors uppercase tracking-wider text-sm">
-                                {buttonLabel}
-                            </button>
+                            <div>
+                                <LuxuryCTAButton variant='gold'>{buttonLabel}</LuxuryCTAButton>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -50,7 +55,7 @@ const ResponsibleGamblingSection = ({
                 <div
                     className="absolute w-[55%] left-0 min-h-full bg-cover bg-center"
                     style={{
-                        backgroundImage: "url('/path-to-slot-machine.jpg')",
+                        backgroundImage: `url('${backgroundImage}')`,
                         backgroundColor: '#1a1a1a'
                     }}
                 />
@@ -71,9 +76,7 @@ const ResponsibleGamblingSection = ({
                         />
 
                         <div>
-                            <button className="bg-[#A68A56] hover:bg-[#8c7345] text-white font-bold py-3 px-8 rounded transition-colors uppercase tracking-wider text-sm">
-                                {buttonLabel}
-                            </button>
+                            <TransparentButton>{buttonLabel}</TransparentButton>
                         </div>
                     </div>
                 </div>

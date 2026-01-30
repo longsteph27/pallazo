@@ -72,6 +72,7 @@ export async function getAboutUsApi(lang: string | null = 'en') {
         fields: [
             '*',
             'translations.*',
+            'img_responsible_gambling',
             { banners: [{ directus_files_id: ['id', 'title', 'filename_disk'] }] }
         ]
     }, lang);
@@ -227,5 +228,15 @@ export async function getMembershipBenefits(lang: string | null = 'en') {
                 ]
             }
         ]
+    }, lang);
+}
+
+/**
+ * Get Events from Directus
+ */
+export async function getEventsApi(lang: string | null = 'en') {
+    return getCollectionItems('events', {
+        fields: ['*', 'translations.*', 'banner.*'],
+        sort: ['-date_created']
     }, lang);
 }

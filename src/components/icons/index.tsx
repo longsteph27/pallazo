@@ -299,7 +299,7 @@ export * from './ResponsibleIcons';
 
 export const AppPreviewHalfCircleSVG = ({ className = "" }: { className?: string }) => {
     return (
-        <svg className={className} width="371" height="186" viewBox="0 0 371 186" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg className={className} viewBox="0 0 371 186" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M370.06 0.5C369.994 24.5958 365.219 48.4482 355.997 70.7129C346.711 93.1316 333.1 113.502 315.941 130.66C298.783 147.819 278.413 161.43 255.994 170.716C233.575 180.002 209.547 184.781 185.281 184.781C161.015 184.781 136.987 180.002 114.568 170.716C92.1497 161.43 71.7796 147.819 54.6211 130.66C37.4626 113.502 23.8516 93.1316 14.5654 70.7129C5.34309 48.4482 0.568124 24.5958 0.50293 0.5H370.06Z" stroke="#BCA574" strokeOpacity="0.2" />
             <path d="M365.531 0.5C365.466 24 360.809 47.2624 351.814 68.9766C342.756 90.8446 329.479 110.714 312.742 127.451C296.005 144.188 276.135 157.465 254.267 166.523C232.399 175.581 208.961 180.244 185.291 180.244C161.621 180.244 138.183 175.582 116.314 166.523C94.4463 157.465 74.576 144.188 57.8389 127.451C41.1019 110.714 27.8256 90.8445 18.7676 68.9766C9.77327 47.2624 5.11499 24 5.0498 0.5H365.531Z" stroke="#BCA574" strokeOpacity="0.3" />
             <path d="M360.922 0.5C360.857 23.3955 356.318 46.0591 347.555 67.2148C338.728 88.5245 325.79 107.887 309.48 124.197C293.171 140.507 273.808 153.445 252.498 162.271C231.188 171.098 208.348 175.642 185.282 175.642C162.217 175.642 139.377 171.098 118.067 162.271C96.7575 153.445 77.3948 140.507 61.085 124.197C44.7752 107.887 31.8375 88.5246 23.0107 67.2148C14.2478 46.0591 9.70872 23.3955 9.64355 0.5H360.922Z" stroke="#BCA574" strokeOpacity="0.4" />
@@ -467,4 +467,55 @@ export const StatsJackpotSVG = ({ className = "" }: { className?: string }) => {
         </svg>
 
     )
+}
+
+export const DetailEventSVG = ({ className = "", text = "DETAIL" }: { className?: string; text?: string }) => {
+    return (
+        <div className={`group cursor-pointer ${className}`}>
+            <svg viewBox="0 0 127 66" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
+                {/* Background Path */}
+                <path
+                    d="M63.3564 0.5C77.7422 0.491909 91.7247 5.25633 103.112 14.0469C114.368 22.7355 122.456 34.8732 126.152 48.5938L63.3945 64.9824L0.614258 48.665C4.2947 34.94 12.3704 22.7932 23.6162 14.0918C34.9938 5.28839 48.9707 0.50819 63.3564 0.5Z"
+                    fill="url(#paint0_linear_695_12212)"
+                    stroke="url(#paint1_linear_695_12212)"
+                />
+
+                {/* Animated Trace Path */}
+                <path
+                    className="detail-trace-path opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    d="M63.3564 0.5C77.7422 0.491909 91.7247 5.25633 103.112 14.0469C114.368 22.7355 122.456 34.8732 126.152 48.5938L63.3945 64.9824L0.614258 48.665C4.2947 34.94 12.3704 22.7932 23.6162 14.0918C34.9938 5.28839 48.9707 0.50819 63.3564 0.5Z"
+                    stroke="white"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    style={{ strokeDasharray: '300', strokeDashoffset: '300' }}
+                />
+
+                {/* Integrated SVG Text */}
+                <text
+                    x="50%"
+                    y="55%"
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    fill="#F9F7ED"
+                    fontSize="15"
+                    fontWeight="bold"
+                    className="uppercase tracking-[0.2em] pointer-events-none select-none"
+                    style={{ fontFamily: 'var(--font-collier), serif' }}
+                >
+                    {text}
+                </text>
+
+                <defs>
+                    <linearGradient id="paint0_linear_695_12212" x1="63.8936" y1="65" x2="66.8936" y2="2" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#95793C" />
+                        <stop offset="1" stopColor="#C9B383" />
+                    </linearGradient>
+                    <linearGradient id="paint1_linear_695_12212" x1="63.3936" y1="2.01184e-07" x2="66.3936" y2="46.5" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="white" />
+                        <stop offset="1" stopColor="white" stopOpacity="0" />
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+    );
 }

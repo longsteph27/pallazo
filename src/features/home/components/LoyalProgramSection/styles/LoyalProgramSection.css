@@ -31,7 +31,7 @@
 }
 
 .loyal-program-title {
-  font-family: 'Georgia', 'Times New Roman', serif;
+  font-family: var(--font-collier), serif;
   font-size: 48px;
   font-weight: 700;
   color: white;
@@ -47,7 +47,6 @@
   padding: 16px 48px;
   border-radius: 6px;
   border: none;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 16px;
   font-weight: 600;
   text-transform: uppercase;
@@ -63,7 +62,6 @@
 }
 
 .loyal-program-description {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 16px;
   line-height: 1.8;
   color: rgba(255, 255, 255, 0.9);
@@ -76,7 +74,7 @@
     font-size: 40px;
     letter-spacing: 2px;
   }
-  
+
   .loyal-program-frame {
     padding: 60px 30px;
   }
@@ -86,23 +84,22 @@
   .loyal-program-section {
     padding: 60px 20px;
   }
-  
+
   .loyal-program-title {
     font-size: 28px;
     letter-spacing: 1.5px;
   }
-  
+
   .loyal-program-frame {
     padding: 50px 20px;
   }
-  
+
   .register-now-btn {
     padding: 14px 36px;
     font-size: 14px;
   }
-  
+
   .loyal-program-description {
     font-size: 14px;
   }
 }
-

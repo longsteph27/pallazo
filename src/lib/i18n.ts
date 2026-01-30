@@ -35,13 +35,13 @@ export const UI_STRINGS = {
         coreValuesTitle: "Core Values",
         coreValuesSubtitle: "Our foundation is built on principles that guide everything we do.",
         responsibleGamblingTitle: "RESPONSIBLE GAMBLING",
-        ctaButton: "CTA BUTTON",
+        ctaButton: "SEE DETAIL",
     },
     vi: {
         coreValuesTitle: "Giá Trị Cốt Lõi",
         coreValuesSubtitle: "Nền tảng của chúng tôi được xây dựng trên những nguyên tắc định hướng mọi việc chúng tôi làm.",
         responsibleGamblingTitle: "CHƠI CÓ TRÁCH NHIỆM",
-        ctaButton: "NÚT HÀNH ĐỘNG",
+        ctaButton: "XEM CHI TIẾT",
     }
 } as const;
 
